@@ -167,37 +167,48 @@ void fetchRides(string start_location, string end_location, Sort_By sort_by)
       
          break;
       
-      case PRICE_HIGH_TO_LOW:
       
-         break;
-         
-      case DURATION:
-      
-         break;
-         
-      case START_TIME:
-      
-         break;
-         
-      default:
-            
-            for(auto t:temp)
-            {
-               cout<<"ride_id:"<<t.second.ride_id<<endl;
-               cout<<"start_location:"<<t.second.start_location<<endl;
-               cout<<"end_location:"<<t.second.end_location<<endl;
-               //cout<<"start_time:"<<t.second.start_time.dd<<"-"<<t.start_time.month<<"-"<<t.start_time.yyyy<<" "<<t.start_time.hh<<":"<<t.start_time.minute<<":"<<t.start_time.ss<<endl;
-               cout<<"expected_duration:"<<t.second.duration<<endl;
-               cout<<"price:"<<t.second.price<<endl;
-            }
-            
-         break;
    }
 }
 int main() {
 	string name;
    int age;
    string aadhar_number;
-	
+   int totalCars;
+	Car_Type car_type;
+   string plate_number;
+   string car_model;
+   cin>>name;
+   cin>>age;
+   cin>>aadhar_number;
+   cin>>totalCars;
+   map<string, Vehicle>userVehicles;
+   for(int i=0;i<totalCars;i++)
+   {
+      cin>>car_type;
+      cin>>plate_number;
+      cin>>car_model;
+      userVehicles=vehicleRegister(car_type, plate_number, car_model, userVehicles);
+   }
+   userRegister(name, age, aadhar_number, userVehicles);
+   auto it=users.begin();
+   User user=it.second;
+   auto it2=user.vehicles.begin();
+   Vehicle vehicle=it2.second;
+   string start_location, end_location;
+   cin>>start_location>>end_location;
+   int dd, month, yyyy, hh, minute, ss;
+   cin>>dd>>month>>yyyy>>hh>>minute>>ss;
+   int duration, price;
+   cin>>duration>>price;
+   Time start_time;
+   start_time.dd=dd;
+   start_time.month=month;
+   start_time.yyyy=yyyy;
+   start_time.hh=hh;
+   start_time.minute=minute;
+   start_time.ss=ss;
+   createRide(user.user_id, user.vehicle.vehicle_id, start_location, end_location, start_time, duration, price);
+   fetchRides(Bangalore, Bombay, PRICE_LOW_TO_HIGH);
 	return 0;
 }
